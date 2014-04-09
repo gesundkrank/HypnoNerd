@@ -9,6 +9,12 @@
 #import "BNRHypnosisViewController.h"
 #import "BNRHypnosisView.h"
 
+@interface BNRHypnosisViewController ()
+
+@property (nonatomic, weak) BNRHypnosisView *hypnosisView;
+
+@end
+
 @implementation BNRHypnosisViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -34,7 +40,31 @@
     BNRHypnosisView *backgroundView = [[BNRHypnosisView alloc] init];
     
     //Set it as *the* view of this controller
+    [backgroundView.segmentedControl addTarget:self action:@selector(touchSegmentControl:) forControlEvents:UIControlEventValueChanged];
     self.view = backgroundView;
+    self.hypnosisView = backgroundView;
+}
+
+- (void)touchSegmentControl:(id) sender
+{
+    int index = [sender selectedSegmentIndex];
+    UIColor *newColor;
+    switch (index) {
+        case 0:
+            newColor = [UIColor redColor];
+            break;
+        case 1:
+            newColor = [UIColor greenColor];
+            break;
+        case 2:
+            newColor = [UIColor blueColor];
+            break;
+            
+        default:
+            newColor = [UIColor grayColor];
+            break;
+    }
+    self.hypnosisView.circleColor = newColor;
 }
 
 @end

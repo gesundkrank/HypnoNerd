@@ -10,4 +10,7 @@
 
 @interface BNRHypnosisView : UIView
 
+@property (nonatomic, strong) UISegmentedControl *segmentedControl;
+@property (strong, nonatomic) UIColor *circleColor;
+
 @end

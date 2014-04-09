@@ -8,12 +8,6 @@
 
 #import "BNRHypnosisView.h"
 
-@interface BNRHypnosisView ()
-
-@property (strong, nonatomic) UIColor *circleColor;
-
-@end
-
 @implementation BNRHypnosisView
 
 - (id)initWithFrame:(CGRect)frame
@@ -23,6 +17,12 @@
         //All BNRHypnosisViews start with a clear background color
         self.backgroundColor = [UIColor clearColor];
         self.circleColor = [UIColor lightGrayColor];
+        
+        UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Red", @"Green", @"Blue"]];
+        _segmentedControl = segmentedControl;
+        [_segmentedControl setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self addSubview:self.segmentedControl];
+        [self setNeedsUpdateConstraints ];
     }
     return self;
 }
@@ -82,6 +82,38 @@
     UIColor * randomColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
     
     self.circleColor = randomColor;
+}
+
+- (void)updateConstraints
+{
+    NSLog(@"Updating constraints");
+    // Center horizontally
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.segmentedControl
+                                                     attribute:NSLayoutAttributeCenterX
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeCenterX
+                                                    multiplier:1.0
+                                                      constant:0.0]];
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.segmentedControl
+                                                    attribute:NSLayoutAttributeTop
+                                                    relatedBy:NSLayoutRelationEqual
+                                                       toItem:self
+                                                    attribute:NSLayoutAttributeTop
+                                                   multiplier:10
+                                                      constant:20]];
+    
+    // Center vertically
+    /*[self addConstraint:[NSLayoutConstraint constraintWithItem:centerView
+     attribute:NSLayoutAttributeCenterY
+     relatedBy:NSLayoutRelationEqual
+     toItem:self
+     attribute:NSLayoutAttributeCenterY
+     multiplier:1.0
+     constant:0.0]];*/
+    [super updateConstraints];
+
 }
 
 
